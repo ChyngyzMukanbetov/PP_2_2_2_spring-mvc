@@ -14,12 +14,12 @@ import java.util.List;
 public class CarsController {
 
     @GetMapping(value = "/cars")
-    public String printCars(@RequestParam(value = "count", required = false) String count, ModelMap model) {
+    public String printCars(@RequestParam(value = "count", required = false) Integer count, ModelMap model) {
         int param;
-        if (count == null) {
+        if ((count == null) || (count < 0))  {
             param = 5;
         } else {
-            param = Integer.parseInt(count);
+            param = count;
         }
 
         List<Car> cars = CarsService.getCarsList(param);
@@ -27,13 +27,4 @@ public class CarsController {
         model.addAttribute("cars", cars);
         return "cars";
     }
-
-//    @GetMapping(value = "/cars")
-//    public String printCars(ModelMap model) {
-//
-//        List<Car> cars = CarsService.getCarsList(5);
-//
-//        model.addAttribute("cars", cars);
-//        return "cars";
-//    }
 }
